@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Shop;
+use DB;
 
 class HomeController extends Controller
 {
@@ -32,13 +33,15 @@ class HomeController extends Controller
         return view('index')->with('items', $items);
     }
 
-    public function show($id) 
+    public function show($id)
     {
         //モデルクラスからデータを取得
         $item = Shop::find($id);
+        DB::table('shops');
 
         //viewに引数を渡す
         return view('product.show')->with('item',$item);
 
     }
+
 }

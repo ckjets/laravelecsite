@@ -5,75 +5,53 @@
 {{-- ログインしないとアクセスできない --}}
 @if(!Auth::guest())
 
+
     <!-- Page Content -->
     <div class="container">
 
             <br>
-             <h1 class="my-4">Your Cart</h1>
-             <h1 class="my-4">3 items</h1>
+             <h1 class="my-4">{{$user->name}}'s Cart</h1>
+             <h1 class="my-4">{{count($carts)}} items</h1>
 
             <!-- Portfolio Item Row -->
             <div class="row">
 
+             @foreach($carts as $cart)
+             {{-- userごとに表示 --}}
+             @if(Auth::user()->id == $cart->user_id)
+
                 <div class="col-md-8">
                     <div class="row">
                     <div class="col-md-4">
-                        <img class="img-fluid" src="/product_image/clothes1.png" alt="" width="150px">
+                        <img class="img-fluid" src="/product_image/{{$cart->product_image}}" alt="" width="150px">
                     </div>
                     <div class="col-md-8">
-                        {{-- 中間テーブル？からデータをfetchするイメージで --}}
-                        <h2>Title</h2>
-                        <h2>Quantity</h2>
-                        <h2>Price</h2>
+                        <h5>{{$cart->user_id}}</h5>
+                        <h3>{{$cart->name}}</h3>
+                        <h5>qty:{{$cart->qty}}</h5>
+                        <h5>Price:＄{{$cart->price}}</h5><h5>size:{{$cart->size}}</h5>
                         <a href="#" class="btn btn-primary">Add</a>
                         <a href="#" class="btn btn-danger">Delete</a>
                     </div>
                     </div>
                     <hr>
                 </div>
+                @endif
+                @endforeach
 
                 <div class="col-md-4" style="border:dashed;">
                     {{-- メソッドを定義して使う --}}
-                <h2>Total Amount</h2>
+                <h2>Total Amount:</h2>
                 <h2>Quantity</h2>
                 <h2>Total price</h2>
                 <a href="#" class="btn btn-primary">Check Out</a>
+                <br><br>
+
                 </div>
 
-                <div class="col-md-8">
-                        <div class="row">
-                        <div class="col-md-4">
-                            <img class="img-fluid" src="/product_image/clothes1.png" alt="" width="150px">
-                        </div>
-                        <div class="col-md-8">
-                            <h2>Title</h2>
-                            <h2>Quantity</h2>
-                            <h2>Price</h2>
-                            <a href="#" class="btn btn-primary">Add</a>
-                            <a href="#" class="btn btn-danger">Delete</a>
-                        </div>
-                        </div>
-                        <hr>
-                    </div>
-
-                    <div class="col-md-8">
-                            <div class="row">
-                            <div class="col-md-4">
-                                <img class="img-fluid" src="/product_image/clothes1.png" alt="" width="150px">
-                            </div>
-                            <div class="col-md-8">
-                                <h2>Title</h2>
-                                <h2>Quantity</h2>
-                                <h2>Price</h2>
-                                <a href="#" class="btn btn-primary">Add</a>
-                                <a href="#" class="btn btn-danger">Delete</a>
-                            </div>
-                            </div>
-                            <hr>
-                        </div>
-
             </div>
             </div>
+
  @else
 
 <div class="container">
@@ -146,6 +124,7 @@
     </div>
 </div>
 @endif
+
 
 
 @endsection

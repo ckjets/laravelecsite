@@ -21,19 +21,45 @@
                 <p>{{$item->description}}</p>
                 <h2>Price:＄{{$item->price}}</h2>
 
-
+                {!! Form::open(['action' => 'CartController@store','method'=>'POST','enctype'=>'multipart/form-data']) !!}
+                {{-- {{Form::hidden('product_id', '2') }} --}}
+                <input name="product_id" type="hidden" value="{{$item->id}}">
                 {!!Form::label('quantity','Quantity')!!}
-                {{Form::select('number', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], null, ['class' => 'quantity'])}}
+                {{Form::selectRange('qty', 1, 10)}}
                 <br>
                 {!!Form::label('size','Size')!!}
-                {{Form::select('text', ["S", "M", "L"], null, ['class' => 'size'])}}
+                {{Form::select('size', array('L' => 'Large', 'S' => 'Small'))}}
                 <br>
 
-                <a href="/cart" class="btn btn-primary">Add a cart</a>
-                </div>
+                {{Form::submit('Add a cart', ['class' => 'btn btn-primary'])}}
+                {!! Form::close() !!}
 
-            </div>
-            </div>
+
+                        {{-- <label for="inputQty">Qty</label>
+                        <select id="inputQty">
+                          <option selected>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                        </select>
+                        <br>
+
+                        <label for="inputSize">Size</label>
+                        <select id="inputSize">
+                          <option selected>S</option>
+                          <option>M</option>
+                          <option>L</option>
+                        </select>
+                        <br> --}}
+
+                        {{-- <button href="{{view('cart.index')}}" type="button" class="btn btn-primary">Add a cart</button> --}}
+
+        
+
+                 </div>
+
+             </div>
+     </div>
     <!-- /.container -->
 
 </html>

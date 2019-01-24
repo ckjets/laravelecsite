@@ -14,10 +14,13 @@
 Route::get('/', 'HomeController@index');
 Route::get('product/show/{id}','HomeController@show');
 
-Route::get('/cart','CartController@index');
+Route::resource('/cart','CartController');
+Route::post('/post','CartController@store');
 Route::get('/order/index','OrderController@index');
 
 //Auth
 Auth::routes();
+
+Route::get('/cart/index', array('as' => 'index','CartController@store'));
 
 
