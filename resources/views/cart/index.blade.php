@@ -5,7 +5,6 @@
 {{-- ログインしないとアクセスできない --}}
 @if(!Auth::guest())
 
-
     <!-- Page Content -->
     <div class="container">
 
@@ -14,43 +13,43 @@
              <h1 class="my-4">{{count($carts)}} items</h1>
 
             <!-- Portfolio Item Row -->
-            <div class="row">
+            <div class="row">            
 
              @foreach($carts as $cart)
              {{-- userごとに表示 --}}
              @if(Auth::user()->id == $cart->user_id)
 
-                <div class="col-md-8">
-                    <div class="row">
-                    <div class="col-md-4">
+                 <div class="col-md-12">
+                     <div class="row">
+                      <div class="col-md-4">
                         <img class="img-fluid" src="/product_image/{{$cart->product_image}}" alt="" width="150px">
-                    </div>
-                    <div class="col-md-8">
-                        <h5>{{$cart->user_id}}</h5>
+                      </div>
+                      <div class="col-md-8">
                         <h3>{{$cart->name}}</h3>
                         <h5>qty:{{$cart->qty}}</h5>
                         <h5>Price:＄{{$cart->price}}</h5><h5>size:{{$cart->size}}</h5>
                         <a href="#" class="btn btn-primary">Add</a>
                         <a href="#" class="btn btn-danger">Delete</a>
-                    </div>
-                    </div>
+                      </div>
+                     </div>
                     <hr>
-                </div>
-                @endif
-                @endforeach
+                 </div>
+             @endif
+             @endforeach
 
-                <div class="col-md-4" style="border:dashed;">
-                    {{-- メソッドを定義して使う --}}
-                <h2>Total Amount:</h2>
-                <h2>Quantity</h2>
-                <h2>Total price</h2>
-                <a href="#" class="btn btn-primary">Check Out</a>
-                <br><br>
+                 <div class="container">
+                   <div class="text-center">
+                     <br>
+                     <h2>Total Amount:</h2>
+                     <h2>Quantity:{{count($carts)}}</h2>
+                     {{-- <h2>Total price:{{$totalprice)}}</h2> --}}
+                     <a href="#" class="btn btn-primary">Check Out</a>
+                     <br><br><br>
+                   </div>
+                 </div>
 
-                </div>
-
-            </div>
-            </div>
+             </div>
+     </div>
 
  @else
 

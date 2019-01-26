@@ -52,7 +52,7 @@ class CartController extends Controller
         $cartitems->size = $request->input('size');
         $cartitems->save();
    
-        return redirect('/cart')->with('success','success add');
+        return redirect('/cart');
     }
 
     /**
@@ -101,12 +101,9 @@ class CartController extends Controller
     }
 
     public function getTotalPrice() {
-        $carts =DB::select('SELECT * FROM carts c LEFT OUTER JOIN shops s ON c.product_id = s.id');
-        
+        $totalprice = DB::select('SELECT * FROM carts c LEFT OUTER JOIN shops s ON c.product_id = s.id')->sum('price');
 
-
-
-        return redirect('/cart')->with('success','success add');
+        return view('cart.index',compact('totalprice'));
 
      
         
