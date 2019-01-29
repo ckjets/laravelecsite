@@ -17,7 +17,9 @@ Route::get('product/show/{id}','HomeController@show');
 Route::resource('/cart','CartController');
 Route::post('/post','CartController@store');
 Route::get('/order/index','OrderController@index');
-
+Route::get('/checkout/index','CheckoutController@index');
+Route::get('/payment','CheckoutController@payment');
+Route::post('store-payment','CheckoutController@storePayment')->name('payment.store');
 //Auth
 Auth::routes();
 

@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 
 {{-- ログインしないとアクセスできない --}}
@@ -13,8 +12,8 @@
              <h1 class="my-4">{{count($carts)}} items</h1>
 
             <!-- Portfolio Item Row -->
-            <div class="row">            
-
+            <div class="row">
+                
              @foreach($carts as $cart)
              {{-- userごとに表示 --}}
              @if(Auth::user()->id == $cart->user_id)
@@ -43,7 +42,7 @@
                      <h2>Total Amount:</h2>
                      <h2>Quantity:{{count($carts)}}</h2>
                      {{-- <h2>Total price:{{$totalprice)}}</h2> --}}
-                     <a href="#" class="btn btn-primary">Check Out</a>
+                     <a href="/checkout/index" class="btn btn-success">Buy now</a>
                      <br><br><br>
                    </div>
                  </div>

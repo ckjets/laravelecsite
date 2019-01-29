@@ -3,13 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-// use Darryldecode\Cart\Cart;
 
-use App\Shop;
-
-class CartController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,11 +13,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        //LEFT OUTER JOIN
-        $carts =DB::select('SELECT * FROM carts c LEFT OUTER JOIN shops s ON c.product_id = s.id');
-
-        return view('cart.index',compact('user','carts'));
+        //
     }
 
     /**
@@ -40,20 +31,22 @@ class CartController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     * store = add
      */
     public function store(Request $request)
     {
-        // $carts = DB::select('select * from shops s INNER JOIN carts c ON s.id = c.product_id');
-
-        $cartitems = new Cart;
-        $cartitems->user_id = auth()->user()->id;
-        $cartitems->product_id = $request->input('product_id');
-        $cartitems->qty = $request->input('qty');
-        $cartitems->size = $request->input('size');
-        $cartitems->save();
-   
-        return redirect('/cart');
+        $this->validate($request,[
+            'firstname'=>'required',
+            'lastname'=>'required',
+            'address'=>'required',
+            'address2'=>'required',
+            'city'=>'required',
+            'state'=>'required',
+            'zip'=>'required|integer',
+        ]);
+        Auth::user()->address()->create($request->all());
+        
+        // return redirect();
+        return redirect()->route('checkout.payment');
     }
 
     /**
@@ -64,7 +57,7 @@ class CartController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
@@ -99,15 +92,5 @@ class CartController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function getTotalPrice() {
-        $totalprice = DB::select('SELECT * FROM carts c LEFT OUTER JOIN shops s ON c.product_id = s.id')->sum('price');
-
-        return view('cart.index',compact('totalprice'));
-
-     
-        
-        
     }
 }
