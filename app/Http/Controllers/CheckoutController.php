@@ -34,7 +34,7 @@ class CheckoutController extends Controller
         // Create a charge: this will charge the user's card
                 try {
                     $charge = \Stripe\Charge::create(array(
-                        "amount" =>Cart::add();, // Amount in cents
+                        "amount" =>Cart::add(), // Amount in cents
                         "currency" => "usd",
                         "source" => $token,
                         "description" => "Example charge"
