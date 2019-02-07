@@ -27,9 +27,6 @@
                 {!!Form::label('quantity','Quantity')!!}
                 {{Form::selectRange('qty', 1, 10)}}
                 <br>
-                {!!Form::label('size','Size')!!}
-                {{Form::select('size', array('L' => 'Large', 'S' => 'Small'))}}
-                <br>
 
                 {{Form::submit('Add a cart', ['class' => 'btn btn-primary'])}}
                 {!! Form::close() !!}     
@@ -112,5 +109,4 @@
         </div>
     </div>
     @endif
-    
 @endsection

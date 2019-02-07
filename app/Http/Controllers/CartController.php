@@ -1,14 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-// use Darryldecode\Cart\Cart;
-
+use App\Cart;
 use App\Shop;
-
 class CartController extends Controller
 {
     /**
@@ -21,10 +18,8 @@ class CartController extends Controller
         $user = Auth::user();
         //LEFT OUTER JOIN
         $carts =DB::select('SELECT * FROM carts c LEFT OUTER JOIN shops s ON c.product_id = s.id');
-
         return view('cart.index',compact('user','carts'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -34,7 +29,6 @@ class CartController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -46,16 +40,34 @@ class CartController extends Controller
     {
         // $carts = DB::select('select * from shops s INNER JOIN carts c ON s.id = c.product_id');
 
-        $cartitems = new Cart;
-        $cartitems->user_id = auth()->user()->id;
-        $cartitems->product_id = $request->input('product_id');
-        $cartitems->qty = $request->input('qty');
-        $cartitems->size = $request->input('size');
-        $cartitems->save();
+        if(auth()->user()->id == DB::select('SELECT user_id FROM carts;')) {
+
+            if($request->input('product_id') == DB::select('SELECT product_id FROM carts;')){
+
+                $qty1=$request->input('qty')+DB::select('SELECT qty FROM carts;');
+                $carts = DB::update('UPDATE carts SET qty=$qty1;');
+
+            }
+            else{
+                $cartitems = new Cart;
+                $cartitems->user_id = auth()->user()->id;
+                $cartitems->product_id = $request->input('product_id');
+                $cartitems->qty = $request->input('qty');
+                $cartitems->save();
+            }
+
+        } else {
+
+            $cartitems = new Cart;
+            $cartitems->user_id = auth()->user()->id;
+            $cartitems->product_id = $request->input('product_id');
+            $cartitems->qty = $request->input('qty');
+            $cartitems->save();
+
+        }
    
         return redirect('/cart');
     }
-
     /**
      * Display the specified resource.
      *
@@ -64,9 +76,7 @@ class CartController extends Controller
      */
     public function show($id)
     {
-
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -77,7 +87,6 @@ class CartController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -89,7 +98,6 @@ class CartController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -101,13 +109,4 @@ class CartController extends Controller
         //
     }
 
-    public function getTotalPrice() {
-        $totalprice = DB::select('SELECT * FROM carts c LEFT OUTER JOIN shops s ON c.product_id = s.id')->sum('price');
-
-        return view('cart.index',compact('totalprice'));
-
-     
-        
-        
-    }
 }

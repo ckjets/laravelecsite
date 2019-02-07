@@ -20,9 +20,15 @@ Route::get('/order/index','OrderController@index');
 Route::get('/checkout/index','CheckoutController@index');
 Route::get('/payment','CheckoutController@payment');
 Route::post('store-payment','CheckoutController@storePayment')->name('payment.store');
+Route::get('/checkout/success','CheckoutController@success');
+
 //Auth
 Auth::routes();
 
+
+//stripe
 Route::get('/cart/index', array('as' => 'index','CartController@store'));
-
-
+Route::get('addmoney/stripe', array('as' => 'addmoney.paywithstripe','uses' => 'AddMoneyController@payWithStripe'));
+Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'AddMoneyController@postPaymentWithStripe'));
+Route::get('payment', array('as' => 'addmoney.paywithstripe','uses' => 'AddMoneyController@payWithStripe'));
+Route::post('addmoney/stripe', array('as' => 'addmoney.stripe','uses' => 'AddMoneyController@postPaymentWithStripe'));

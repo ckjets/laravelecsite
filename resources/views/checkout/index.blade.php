@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    {{-- あとで消す --}}
     <br><br><br><br>
 <h1>Check Out</h1>
 <hr>
-
-<form action="AddressController@store" method="post">
+{{-- 
+{!! Form::open(['action' => 'AddressController@store','method'=>'POST','enctype'=>'multipart/form-data']) !!} --}}
+{{-- <form action="AddressController@store" method="post"> --}}
      <div class="row">
      <div class="col">
      <label for="inputPassword4">First Name</label>
@@ -52,7 +52,8 @@
             </label>
           </div>
         </div>
-      </form>
+        <input class="btn btn-success" type="submit" value="Submit">
+        {!! Form::close() !!}
 
       {{-- {!! Form::open(['action' => 'CheckoutController@store','method'=>'POST','enctype'=>'multipart/form-data']) !!}
       <input name="product_id" type="hidden" value="{{$item->id}}">
@@ -68,7 +69,7 @@
       
 
 {{-- stripe --}}
-<form action="/payment" method="POST">
+{{-- <form action="/payment" method="POST">
     <script
       src="https://checkout.stripe.com/checkout.js"
       class="stripe-button"
@@ -78,7 +79,7 @@
       data-description="2 widgets ($20.00)"
       data-amount="2000">
     </script>
-  </form>
+  </form> --}}
 
 <br><br><br>
 
